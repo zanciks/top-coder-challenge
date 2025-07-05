@@ -2,7 +2,8 @@ use serde_json::Value;
 use std::fs::File;
 use std::io::BufReader;
 
-mod trip;
+mod tests;
+pub mod trip;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let file = File::open("public_cases.json")?;
