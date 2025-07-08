@@ -1,24 +1,17 @@
-use serde_json::Value;
-use std::fs::File;
-use std::io::BufReader;
+use std::env;
+
+use crate::trip::Trip;
 
 mod tests;
-pub mod trip;
+mod trip;
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let file = File::open("public_cases.json")?;
-    let reader = BufReader::new(file);
-    let raw: Vec<Value> = serde_json::from_reader(reader)?;
-
-    let trips: Vec<trip::Trip> = raw
-        .into_iter()
-        .filter_map(|v| v.get("input").cloned())
-        .filter_map(|input| serde_json::from_value(input).ok())
+fn main() {
+    let args: Vec<String> = env::args().collect();
+    let floats: Vec<f32> = args
+        .iter()
+        .skip(1)
+        .map(|s| s.parse::<f32>().unwrap())
         .collect();
-
-    for trip in trips {
-        println!("{}", trip);
-    }
-
-    Ok(())
+    let trip = Trip::new(floats[0] as i32, floats[1], floats[2]);
+    println!("{}", trip.calculate_output());
 }
