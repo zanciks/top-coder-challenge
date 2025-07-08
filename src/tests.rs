@@ -61,4 +61,9 @@ mod tests {
         let test_case = TestCase::new(3, 88.0, 5.78, 380.37);
         check(&test_case);
     }
+    #[test]
+    fn public_case_0006() {
+        let test_case = TestCase::new(1, 76.0, 13.74, 158.35);
+        check(&test_case);
+    }
 }
